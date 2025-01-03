@@ -4,7 +4,12 @@ project(${SKBUILD_PROJECT_NAME} LANGUAGES C CXX)
 find_package(Python COMPONENTS Interpreter Development.Module ${SKBUILD_SABI_COMPONENT})
 find_package(nanobind CONFIG REQUIRED)
 
-nanobind_add_module(_core MODULE src/_core.cpp)
+nanobind_add_module(_core src/_core.cpp
+    NB_STATIC
+    NB_DOMAIN avril
+    STABLE_ABI
+)
+
 nanobind_add_stub(_core_stub
     MODULE _core
     OUTPUT ${SKBUILD_PROJECT_NAME}/_core.pyi

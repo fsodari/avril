@@ -1,7 +1,7 @@
 #include <nanobind/nanobind.h>
 #include <nanobind/stl/string.h>
 
-std::string hello_from_bin() { return "Hello from avril!"; }
+std::string hello_from_bin() { return "Hello, Avril!"; }
 
 namespace nb = nanobind;
 
