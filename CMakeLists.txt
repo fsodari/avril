@@ -1,8 +1,15 @@
-cmake_minimum_required(VERSION 3.15)
-project(${SKBUILD_PROJECT_NAME} LANGUAGES CXX)
+cmake_minimum_required(VERSION 3.28)
+project(${SKBUILD_PROJECT_NAME} LANGUAGES C CXX)
 
-set(PYBIND11_FINDPYTHON ON)
-find_package(pybind11 CONFIG REQUIRED)
+find_package(Python COMPONENTS Interpreter Development.Module ${SKBUILD_SABI_COMPONENT})
+find_package(nanobind CONFIG REQUIRED)
 
-pybind11_add_module(_core MODULE src/main.cpp)
+nanobind_add_module(_core MODULE src/_core.cpp)
+nanobind_add_stub(_core_stub
+    MODULE _core
+    OUTPUT ${SKBUILD_PROJECT_NAME}/_core.pyi
+    PYTHON_PATH $<TARGET_FILE_DIR:_core>
+    MARKER_FILE ${SKBUILD_PROJECT_NAME}/py.typed
+    INSTALL_TIME
+)
 install(TARGETS _core DESTINATION ${SKBUILD_PROJECT_NAME})
